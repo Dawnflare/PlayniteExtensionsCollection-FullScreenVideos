@@ -28,7 +28,7 @@ To test these changes, you need to compile the project and manually replace the 
     This will produce `ExtraMetadataLoader.dll` in `source\Generic\ExtraMetadataLoader\bin\Debug\`.
 
 2.  **Locate Playnite Extensions**:
-    Open Playnite, go to `Main Menu > Help > About Playnite > User data folder`.
+    Open Playnite, go to `Main Menu > About Playnite > User data directory`.
     Navigate to the `Extensions` folder (**not** `ExtensionsData`).
     Look for a folder named `ExtraMetadataLoader` or `705fdbca-e1fc-4004-b839-1d040b8b4429` (the Extra Metadata Loader GUID).
 
