@@ -1,0 +1,34 @@
+﻿MSBuild version 18.4.0+6e61e96ac for .NET Framework
+
+  ExtraMetadataLoader -> C:\Users\jwoud\OneDrive\Projects\PlayniteExtensionsCollection-FullScreenVideos\source\Generic\ExtraMetadataLoader\bin\Debug\ExtraMetadataLoader.dll
+  C:\Users\jwoud\OneDrive\Projects\PlayniteExtensionsCollection-FullScreenVideos\source\Generic\ExtraMetadataLoader\Localization\af_ZA.xaml
+  C:\Users\jwoud\OneDrive\Projects\PlayniteExtensionsCollection-FullScreenVideos\source\Generic\ExtraMetadataLoader\Localization\ar_SA.xaml
+  C:\Users\jwoud\OneDrive\Projects\PlayniteExtensionsCollection-FullScreenVideos\source\Generic\ExtraMetadataLoader\Localization\ca_ES.xaml
+  C:\Users\jwoud\OneDrive\Projects\PlayniteExtensionsCollection-FullScreenVideos\source\Generic\ExtraMetadataLoader\Localization\cs_CZ.xaml
+  C:\Users\jwoud\OneDrive\Projects\PlayniteExtensionsCollection-FullScreenVideos\source\Generic\ExtraMetadataLoader\Localization\da_DK.xaml
+  C:\Users\jwoud\OneDrive\Projects\PlayniteExtensionsCollection-FullScreenVideos\source\Generic\ExtraMetadataLoader\Localization\de_DE.xaml
+  C:\Users\jwoud\OneDrive\Projects\PlayniteExtensionsCollection-FullScreenVideos\source\Generic\ExtraMetadataLoader\Localization\en_US.xaml
+  C:\Users\jwoud\OneDrive\Projects\PlayniteExtensionsCollection-FullScreenVideos\source\Generic\ExtraMetadataLoader\Localization\eo_UY.xaml
+  C:\Users\jwoud\OneDrive\Projects\PlayniteExtensionsCollection-FullScreenVideos\source\Generic\ExtraMetadataLoader\Localization\es_ES.xaml
+  C:\Users\jwoud\OneDrive\Projects\PlayniteExtensionsCollection-FullScreenVideos\source\Generic\ExtraMetadataLoader\Localization\fa_IR.xaml
+  C:\Users\jwoud\OneDrive\Projects\PlayniteExtensionsCollection-FullScreenVideos\source\Generic\ExtraMetadataLoader\Localization\fi_FI.xaml
+  C:\Users\jwoud\OneDrive\Projects\PlayniteExtensionsCollection-FullScreenVideos\source\Generic\ExtraMetadataLoader\Localization\fr_FR.xaml
+  C:\Users\jwoud\OneDrive\Projects\PlayniteExtensionsCollection-FullScreenVideos\source\Generic\ExtraMetadataLoader\Localization\gl_ES.xaml
+  C:\Users\jwoud\OneDrive\Projects\PlayniteExtensionsCollection-FullScreenVideos\source\Generic\ExtraMetadataLoader\Localization\hr_HR.xaml
+  C:\Users\jwoud\OneDrive\Projects\PlayniteExtensionsCollection-FullScreenVideos\source\Generic\ExtraMetadataLoader\Localization\hu_HU.xaml
+  C:\Users\jwoud\OneDrive\Projects\PlayniteExtensionsCollection-FullScreenVideos\source\Generic\ExtraMetadataLoader\Localization\it_IT.xaml
+  C:\Users\jwoud\OneDrive\Projects\PlayniteExtensionsCollection-FullScreenVideos\source\Generic\ExtraMetadataLoader\Localization\ja_JP.xaml
+  C:\Users\jwoud\OneDrive\Projects\PlayniteExtensionsCollection-FullScreenVideos\source\Generic\ExtraMetadataLoader\Localization\ko_KR.xaml
+  C:\Users\jwoud\OneDrive\Projects\PlayniteExtensionsCollection-FullScreenVideos\source\Generic\ExtraMetadataLoader\Localization\nl_NL.xaml
+  C:\Users\jwoud\OneDrive\Projects\PlayniteExtensionsCollection-FullScreenVideos\source\Generic\ExtraMetadataLoader\Localization\no_NO.xaml
+  C:\Users\jwoud\OneDrive\Projects\PlayniteExtensionsCollection-FullScreenVideos\source\Generic\ExtraMetadataLoader\Localization\pl_PL.xaml
+  C:\Users\jwoud\OneDrive\Projects\PlayniteExtensionsCollection-FullScreenVideos\source\Generic\ExtraMetadataLoader\Localization\pt_BR.xaml
+  C:\Users\jwoud\OneDrive\Projects\PlayniteExtensionsCollection-FullScreenVideos\source\Generic\ExtraMetadataLoader\Localization\pt_PT.xaml
+  C:\Users\jwoud\OneDrive\Projects\PlayniteExtensionsCollection-FullScreenVideos\source\Generic\ExtraMetadataLoader\Localization\ru_RU.xaml
+  C:\Users\jwoud\OneDrive\Projects\PlayniteExtensionsCollection-FullScreenVideos\source\Generic\ExtraMetadataLoader\Localization\sr_SP.xaml
+  C:\Users\jwoud\OneDrive\Projects\PlayniteExtensionsCollection-FullScreenVideos\source\Generic\ExtraMetadataLoader\Localization\tr_TR.xaml
+  C:\Users\jwoud\OneDrive\Projects\PlayniteExtensionsCollection-FullScreenVideos\source\Generic\ExtraMetadataLoader\Localization\uk_UA.xaml
+  C:\Users\jwoud\OneDrive\Projects\PlayniteExtensionsCollection-FullScreenVideos\source\Generic\ExtraMetadataLoader\Localization\vi_VN.xaml
+  C:\Users\jwoud\OneDrive\Projects\PlayniteExtensionsCollection-FullScreenVideos\source\Generic\ExtraMetadataLoader\Localization\zh_CN.xaml
+  C:\Users\jwoud\OneDrive\Projects\PlayniteExtensionsCollection-FullScreenVideos\source\Generic\ExtraMetadataLoader\Localization\zh_TW.xaml
+  30 File(s) copied

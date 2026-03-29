@@ -1,4 +1,4 @@
-﻿using Playnite.SDK.Models;
+using Playnite.SDK.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,15 +27,19 @@ namespace ExtraMetadataLoader.MetadataProviders
         }
     }
 
+    public enum VideoType { Trailer, Microtrailer }
+
     public class VideoDownloadOptions
     {
         public string DownloadPath { get; private set; }
         public bool IsBackgroundDownload { get; private set; }
+        public VideoType VideoType { get; private set; }
 
-        public VideoDownloadOptions (string downloadPath, bool isBackgroundDownload)
+        public VideoDownloadOptions(string downloadPath, bool isBackgroundDownload, VideoType videoType = VideoType.Trailer)
         {
             DownloadPath = downloadPath;
             IsBackgroundDownload = isBackgroundDownload;
+            VideoType = videoType;
         }
     }
 

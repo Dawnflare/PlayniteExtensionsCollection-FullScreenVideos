@@ -1,4 +1,4 @@
-﻿using ExtraMetadataLoader.Helpers;
+using ExtraMetadataLoader.Helpers;
 using ExtraMetadataLoader.MetadataProviders;
 using ExtraMetadataLoader.Models;
 using ExtraMetadataLoader.Services;
@@ -95,7 +95,8 @@ namespace ExtraMetadataLoader
                 SettingsRoot = $"{nameof(settings)}.{nameof(settings.Settings)}"
             });
 
-            videosDownloader = new VideosDownloader(PlayniteApi, settings.Settings);
+            var videoProcessor = new VideoProcessor(PlayniteApi, _logger, settings.Settings);
+            videosDownloader = new VideosDownloader(PlayniteApi, settings.Settings, videoProcessor);
             PlayniteApi.Database.Games.ItemCollectionChanged += (sender, ItemCollectionChangedArgs) =>
             {
                 foreach (var removedItem in ItemCollectionChangedArgs.RemovedItems)
@@ -381,7 +382,7 @@ namespace ExtraMetadataLoader
 
                                 a.CurrentProgressValue++;
                                 a.Text = $"{progressTitle}\n\n{a.CurrentProgressValue}/{games.Count()}\n{game.Name}";
-                                GetGameLogo(logoProvider, game, isBackgroundDownload, overwrite, a.CancelToken);
+                                metadataDownloadService.DownloadLogoAsync(logoProvider, game, isBackgroundDownload, overwrite, a.CancelToken).GetAwaiter().GetResult();
                             };
                         }, progressOptions);
                         PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogMessageDone"), "Extra Metadata Loader");
@@ -415,7 +416,7 @@ namespace ExtraMetadataLoader
                                 a.CurrentProgressValue++;
                                 a.Text = $"{progressTitle}\n\n{a.CurrentProgressValue}/{games.Count()}\n{game.Name}";
 
-                                GetGameLogo(logoProvider, game, isBackgroundDownload, overwrite, a.CancelToken);
+                                metadataDownloadService.DownloadLogoAsync(logoProvider, game, isBackgroundDownload, overwrite, a.CancelToken).GetAwaiter().GetResult();
                             };
                         }, progressOptions);
                         PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogMessageDone"), "Extra Metadata Loader");
@@ -430,7 +431,8 @@ namespace ExtraMetadataLoader
                     {
                         var game = args.Games.Last();
                         var googleProvider = new GoogleProvider(PlayniteApi, settings.Settings);
-                        GetGameLogo(googleProvider, game, false, true);
+                        var metadataDownloadSvc = _serviceProvider.GetRequiredService<MetadataDownloadService>();
+                        metadataDownloadSvc.DownloadLogoAsync(googleProvider, game, false, true).GetAwaiter().GetResult();
                     }
                 },
                 new GameMenuItem
@@ -447,7 +449,8 @@ namespace ExtraMetadataLoader
                             var fileCopied = FileSystem.CopyFile(filePath, logoPath, true);
                             if (settings.Settings.ProcessLogosOnDownload && fileCopied)
                             {
-                                ProcessLogoImage(logoPath);
+                                var logoProcessor = _serviceProvider.GetRequiredService<LogoProcessor>();
+                                logoProcessor.ProcessLogoImage(logoPath);
                             }
 
                             OnLogoUpdated(game);
@@ -891,7 +894,7 @@ namespace ExtraMetadataLoader
                             break;
                         }
 
-                        await metadataDownloadService.DownloadLogoAsync(game, true, a.CancelToken);
+                        await metadataDownloadService.DownloadLogoAsync(game, true, false, a.CancelToken);
                     };
                 }, progressOptions);
             }
@@ -901,7 +904,8 @@ namespace ExtraMetadataLoader
                 var progressTitle = ResourceProvider.GetString("LOCExtra_Metadata_Loader_DialogMessageLibUpdateAutomaticDownloadVideos");
                 var progressOptions = new GlobalProgressOptions(progressTitle, true);
                 progressOptions.IsIndeterminate = false;
-                var downloadOptions = new VideoDownloadOptions(VideoType.Trailer,);
+                var videoDownloadPath = ExtraMetadataHelper.GetGameVideoPath(new Playnite.SDK.Models.Game());
+                var downloadOptions = new VideoDownloadOptions(videoDownloadPath, true, VideoType.Trailer);
                 PlayniteApi.Dialogs.ActivateGlobalProgress((a) =>
                 {
                     var games = PlayniteApi.Database.Games.Where(x => x.Added.HasValue && x.Added > settings.Settings.LastAutoLibUpdateAssetsDownload);

@@ -1,5 +1,6 @@
-﻿using ExtraMetadataLoader.Helpers;
+using ExtraMetadataLoader.Helpers;
 using ExtraMetadataLoader.Models;
+using ExtraMetadataLoader.VideosProcessor;
 using Newtonsoft.Json;
 using Playnite.SDK;
 using Playnite.SDK.Models;
@@ -23,28 +24,33 @@ namespace ExtraMetadataLoader.Services
         private readonly IPlayniteAPI playniteApi;
         private static readonly ILogger logger = LogManager.GetLogger();
         private readonly ExtraMetadataLoaderSettings settings;
+        private readonly VideoProcessor videoProcessor;
         
         private readonly string tempDownloadPath = Path.Combine(Path.GetTempPath(), "VideoTemp.mp4");
 
-        public VideosDownloader(IPlayniteAPI playniteApi, ExtraMetadataLoaderSettings settings)
+        public VideosDownloader(IPlayniteAPI playniteApi, ExtraMetadataLoaderSettings settings, VideoProcessor videoProcessor)
         {
             this.playniteApi = playniteApi;
             this.settings = settings;
+            this.videoProcessor = videoProcessor;
         }
 
         public bool DownloadSteamVideo(Game game, bool overwrite, bool isBackgroundDownload, CancellationToken cancelToken, bool downloadVideo = false, bool downloadVideoMicro = false)
         {
-
+            // Steam video downloading has been migrated to MetadataDownloadService.DownloadVideoAsync
+            // via SteamMetadataProvider. This stub preserves the method signature for backward compatibility.
+            logger.Debug($"DownloadSteamVideo called for {game.Name} - delegated to MetadataDownloadService");
+            return false;
         }
 
         public bool SelectedDialogFileToVideo(Game game)
         {
             logger.Debug($"SelectedDialogFileToVideo starting for game {game.Name}");
-            var videoPath = extraMetadataHelper.GetGameVideoPath(game, true);
+            var videoPath = ExtraMetadataHelper.GetGameVideoPath(game, true);
             var selectedVideoPath = playniteApi.Dialogs.SelectFile("Video file|*.mp4;*.avi;*.mkv;*.webm;*.flv;*.wmv;*.mov;*.m4v");
             if (!selectedVideoPath.IsNullOrEmpty())
             {
-                return ProcessVideo(selectedVideoPath, videoPath, true, false);
+                return videoProcessor.ProcessVideo(selectedVideoPath, videoPath, true, false);
             }
             else
             {
@@ -54,11 +60,11 @@ namespace ExtraMetadataLoader.Services
 
         public bool DownloadYoutubeVideoById(Game game, string videoId, bool overwrite)
         {
-            var youtubeDlPath = extraMetadataHelper.ExpandVariables(game, settings.YoutubeDlPath);
-            var ffmpegPath = extraMetadataHelper.ExpandVariables(game, settings.FfmpegPath);
-            var youtubeCookiesPath = extraMetadataHelper.ExpandVariables(game, settings.YoutubeCookiesPath);
+            var youtubeDlPath = ExtraMetadataHelper.ExpandVariables(game, settings.YoutubeDlPath);
+            var ffmpegPath = ExtraMetadataHelper.ExpandVariables(game, settings.FfmpegPath);
+            var youtubeCookiesPath = ExtraMetadataHelper.ExpandVariables(game, settings.YoutubeCookiesPath);
 
-            var videoPath = extraMetadataHelper.GetGameVideoPath(game, true);
+            var videoPath = ExtraMetadataHelper.GetGameVideoPath(game, true);
             if (FileSystem.FileExists(videoPath) && !overwrite)
             {
                 return false;
@@ -82,9 +88,13 @@ namespace ExtraMetadataLoader.Services
             }
             else
             {
-                return ProcessVideo(tempDownloadPath, videoPath, false, false);
+                return videoProcessor.ProcessVideo(tempDownloadPath, videoPath, false, false);
             }
         }
 
+        public bool ConvertVideoToMicro(Game game, bool overwrite)
+        {
+            return videoProcessor.ConvertVideoToMicro(game, overwrite);
+        }
     }
 }

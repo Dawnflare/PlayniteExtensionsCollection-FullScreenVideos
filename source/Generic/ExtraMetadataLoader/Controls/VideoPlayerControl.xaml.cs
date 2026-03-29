@@ -1,4 +1,4 @@
-﻿using ExtraMetadataLoader.Models;
+using ExtraMetadataLoader.Models;
 using Playnite.SDK;
 using Playnite.SDK.Controls;
 using Playnite.SDK.Data;
@@ -19,7 +19,9 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using System.Windows.Input;
 using System.Windows.Threading;
+using EmlFullscreen;
 
 namespace ExtraMetadataLoader
 {
@@ -48,6 +50,7 @@ namespace ExtraMetadataLoader
         private Uri trailerVideoPath;
         private bool multipleSourcesAvailable = false;
         private Game currentGame;
+        private bool _isInFullscreen = false;
 
         private DesktopView activeViewAtCreation;
         public DesktopView ActiveViewAtCreation
@@ -320,6 +323,88 @@ namespace ExtraMetadataLoader
             {
                 SwitchVideoSource();
             }, (a) => multipleSourcesAvailable == true);
+        }
+
+        public RelayCommand EnterFullscreenCommand
+        {
+            get => new RelayCommand(() =>
+            {
+                EnterFullscreen();
+            }, () => VideoSource != null && !_isInFullscreen);
+        }
+
+        private void Player_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ClickCount == 2 && VideoSource != null && !_isInFullscreen)
+            {
+                EnterFullscreen();
+                e.Handled = true;
+            }
+        }
+
+        private void EnterFullscreen()
+        {
+            if (_isInFullscreen || VideoSource == null)
+            {
+                return;
+            }
+
+            _isInFullscreen = true;
+
+            // Capture current state from the embedded player
+            var source = player.Source;
+            var position = player.Position;
+            var volume = videoPlayerVolume;
+            var wasPlaying = SettingsModel.Settings.IsVideoPlaying;
+
+            // Determine if the fullscreen player should loop
+            var shouldLoop = false;
+            if (activeVideoType == ActiveVideoType.Microtrailer)
+            {
+                shouldLoop = true;
+            }
+            else if (activeVideoType == ActiveVideoType.Trailer && SettingsModel.Settings.RepeatTrailerVideos)
+            {
+                shouldLoop = true;
+            }
+
+            // Pause the embedded player before handoff
+            MediaPause();
+
+            try
+            {
+                var fullscreenWindow = new FullscreenVideoWindow(source, position, volume, wasPlaying, shouldLoop);
+                fullscreenWindow.Closed += (s, args) =>
+                {
+                    ExitFullscreen(fullscreenWindow.ExitPosition, fullscreenWindow.WasPlaying);
+                };
+                fullscreenWindow.Show();
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex, "Failed to open fullscreen video window.");
+                _isInFullscreen = false;
+            }
+        }
+
+        private void ExitFullscreen(TimeSpan exitPosition, bool wasPlaying)
+        {
+            _isInFullscreen = false;
+
+            try
+            {
+                player.Position = exitPosition;
+                if (wasPlaying)
+                {
+                    MediaPlay();
+                }
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex, "Failed to restore embedded player state after fullscreen.");
+            }
+
+            OnPropertyChanged(nameof(EnterFullscreenCommand));
         }
 
         void SwitchVideoSource()

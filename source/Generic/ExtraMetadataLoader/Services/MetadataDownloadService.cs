@@ -1,4 +1,4 @@
-﻿using EventsCommon;
+using EventsCommon;
 using ExtraMetadataLoader.Helpers;
 using ExtraMetadataLoader.MetadataProviders;
 using ExtraMetadataLoader.VideosProcessor;
@@ -93,6 +93,44 @@ namespace ExtraMetadataLoader.Services
             }
 
             return false;
+        }
+
+        public async Task<bool> DownloadLogoAsync(ILogoProvider provider, Game game, bool isBackgroundDownload, bool overwrite, CancellationToken cancelToken = default)
+        {
+            var logoDownloadPath = ExtraMetadataHelper.GetGameLogoPath(game, true);
+            if (!overwrite && FileSystem.FileExists(logoDownloadPath))
+            {
+                return true;
+            }
+
+            var downloadOptions = new LogoDownloadOptions(isBackgroundDownload);
+            try
+            {
+                var logoUrl = provider.GetLogoUrl(game, downloadOptions, cancelToken);
+                if (logoUrl.IsNullOrEmpty())
+                {
+                    return false;
+                }
+
+                var downloadIsSuccess = await DownloadFile(logoUrl, logoDownloadPath, cancelToken);
+                if (!downloadIsSuccess)
+                {
+                    return false;
+                }
+
+                if (_settings.ProcessLogosOnDownload)
+                {
+                    _logoProcessor.ProcessLogoImage(logoDownloadPath);
+                }
+
+                OnLogoUpdated(game);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, $"Error during logo metadata download for {provider.Id}");
+                return false;
+            }
         }
 
         private void OnLogoUpdated(Game game)
