@@ -38,3 +38,7 @@ packages/
 # Ignore everything else in release folders
 **/bin/[Rr]elease*/
 /.stfolder/
+
+# Agent and temporary build files
+.agent/
+source/build_output.txt
