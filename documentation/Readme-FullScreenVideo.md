@@ -8,6 +8,8 @@ This update adds the ability to view game videos in a borderless, maximized full
   - Click the new **Fullscreen (⛶)** button in the video player's control bar.
   - **Double-click** anywhere on the video surface.
 - **State Preservation**: The video continues from its current position, volume level, and play/pause state when switching between embedded and fullscreen modes.
+- **Playback Controls**:
+  - **Play/Pause**: Press the **Spacebar** or **Single-click** anywhere on the video.
 - **Exit Methods**:
   - Press the **Escape** key.
   - **Double-click** the fullscreen video.

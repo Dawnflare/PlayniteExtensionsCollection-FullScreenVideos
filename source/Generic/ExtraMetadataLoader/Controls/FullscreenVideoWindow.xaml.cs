@@ -92,11 +92,38 @@ namespace EmlFullscreen
             }
         }
 
+        private void TogglePlayPause()
+        {
+            if (WasPlaying)
+            {
+                fsPlayer.Pause();
+                WasPlaying = false;
+            }
+            else
+            {
+                fsPlayer.Play();
+                WasPlaying = true;
+            }
+        }
+
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Escape)
             {
                 CloseFullscreen();
+            }
+            else if (e.Key == Key.Space)
+            {
+                TogglePlayPause();
+                e.Handled = true;
+            }
+        }
+
+        private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ClickCount == 1)
+            {
+                TogglePlayPause();
             }
         }
 
