@@ -150,8 +150,8 @@
                         ToolTip="Fullscreen"
                         Margin="10,0,0,0" Padding="5">
                     <Button.Content>
-                        <TextBlock FontFamily="{StaticResource FontIcoFont}"
-                                   Text="&#xEF1B;" FontSize="24" />
+                        <TextBlock FontFamily="Segoe MDL2 Assets"
+                                   Text="&#xE740;" FontSize="20" Margin="0,2,0,0" />
                     </Button.Content>
                 </Button>
             </WrapPanel>
