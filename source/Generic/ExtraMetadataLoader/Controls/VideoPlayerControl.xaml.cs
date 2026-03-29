@@ -373,10 +373,10 @@ namespace ExtraMetadataLoader
 
             try
             {
-                var fullscreenWindow = new FullscreenVideoWindow(source, position, volume, wasPlaying, shouldLoop);
+                var fullscreenWindow = new FullscreenVideoWindow(source, position, volume, wasPlaying, shouldLoop, IsPlayerMuted);
                 fullscreenWindow.Closed += (s, args) =>
                 {
-                    ExitFullscreen(fullscreenWindow.ExitPosition, fullscreenWindow.WasPlaying);
+                    ExitFullscreen(fullscreenWindow);
                 };
                 fullscreenWindow.Show();
             }
@@ -387,14 +387,21 @@ namespace ExtraMetadataLoader
             }
         }
 
-        private void ExitFullscreen(TimeSpan exitPosition, bool wasPlaying)
+        private void ExitFullscreen(FullscreenVideoWindow fsWindow)
         {
             _isInFullscreen = false;
 
             try
             {
-                player.Position = exitPosition;
-                if (wasPlaying)
+                // Restore volume and mute state from fullscreen
+                videoPlayerVolume = fsWindow.ExitVolume;
+                volumeSlider.Value = Math.Sqrt(fsWindow.ExitVolume);
+                IsPlayerMuted = fsWindow.ExitMuted;
+                OnPropertyChanged(nameof(VideoPlayerVolume));
+                OnPropertyChanged(nameof(VideoPlayerVolumeLinear));
+
+                player.Position = fsWindow.ExitPosition;
+                if (fsWindow.WasPlaying)
                 {
                     MediaPlay();
                 }
