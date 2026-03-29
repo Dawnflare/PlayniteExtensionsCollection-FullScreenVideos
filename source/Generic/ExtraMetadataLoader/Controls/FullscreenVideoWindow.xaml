@@ -20,22 +20,41 @@
                       MediaEnded="FsPlayer_MediaEnded" />
 
         <!-- Exit fullscreen button overlay -->
-        <Button Name="ExitButton"
-                HorizontalAlignment="Right"
+        <Border HorizontalAlignment="Right"
                 VerticalAlignment="Top"
                 Margin="20"
-                Padding="8,4"
-                FontSize="24"
-                Foreground="White"
-                Background="#44000000"
-                BorderThickness="0"
-                Click="ExitButton_Click"
-                Opacity="0.6"
-                Cursor="Hand">
-            <Button.Content>
-                <TextBlock Text="✕" />
-            </Button.Content>
-        </Button>
+                Padding="14,6"
+                Background="#88000000"
+                CornerRadius="6"
+                Cursor="Hand"
+                MouseLeftButtonDown="ExitButton_MouseLeftButtonDown">
+            <Border.Style>
+                <Style TargetType="Border">
+                    <Setter Property="Opacity" Value="0.15" />
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                                                         To="0.9" Duration="0:0:0.2" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                                                         To="0.15" Duration="0:0:0.4" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Border.Style>
+            <TextBlock Text="✕" FontSize="20" Foreground="White" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" />
+        </Border>
 
         <!-- Transport controls bar at the bottom -->
         <Border Name="ControlBar"

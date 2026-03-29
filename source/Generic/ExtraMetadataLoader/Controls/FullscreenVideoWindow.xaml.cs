@@ -300,8 +300,9 @@ namespace EmlFullscreen
 
         // ── Exit ────────────────────────────────────────────────
 
-        private void ExitButton_Click(object sender, RoutedEventArgs e)
+        private void ExitButton_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            e.Handled = true;
             CloseFullscreen();
         }
 
