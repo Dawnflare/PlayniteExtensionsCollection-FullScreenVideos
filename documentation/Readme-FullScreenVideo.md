@@ -29,8 +29,8 @@ To test these changes, you need to compile the project and manually replace the 
 
 2.  **Locate Playnite Extensions**:
     Open Playnite, go to `Main Menu > Help > About Playnite > User data folder`.
-    Navigate to the `ExtensionsData` folder.
-    Look for a folder named `705fdbca-e1fc-4004-b839-1d040b8b4429` (the Extra Metadata Loader GUID).
+    Navigate to the `Extensions` folder (**not** `ExtensionsData`).
+    Look for a folder named `ExtraMetadataLoader` or `705fdbca-e1fc-4004-b839-1d040b8b4429` (the Extra Metadata Loader GUID).
 
 3.  **Replace Files**:
     - **Close Playnite** completely.
