@@ -138,6 +138,14 @@ namespace EmlFullscreen
             {
                 _hasAppliedStartPosition = true;
                 fsPlayer.Position = _startPosition;
+
+                // FIX: If starting paused, MediaElement shows a black screen
+                // until it's played. Briefly Play and Pause forces frame rendering.
+                if (!_startPlaying)
+                {
+                    fsPlayer.Play();
+                    fsPlayer.Pause();
+                }
             }
 
             // Configure the timeline slider range
