@@ -2,21 +2,33 @@
 
 This update adds the ability to view game videos in a borderless, maximized fullscreen window within the Extra Metadata Loader extension for Playnite.
 
-## Features
+## ✨ Features
 
 - **Multiple Triggers**: 
-  - Click the new **Fullscreen (⛶)** button in the video player's control bar.
-  - **Double-click** anywhere on the video surface.
-- **State Preservation**: The video continues from its current position, volume level, and play/pause state when switching between embedded and fullscreen modes.
-- **Playback Controls**:
-  - **Play/Pause**: Press the **Spacebar** or **Single-click** anywhere on the video.
+  - Click the new **Fullscreen (⛶)** button in the embedded video player's control bar.
+  - **Double-click** anywhere on the video surface to rapidly pop it out.
+- **State Preservation**: A completely seamless handoff. The video continues from its exact current position, volume level, and muted/unmuted state when switching between embedded and fullscreen modes.
+- **Animated Transport Controls**: 
+  - A bottom-aligned control bar containing full premium features.
+  - **Animated Opacity**: The entire control bar, as well as the exit button, rests at an unobtrusive 15% opacity so it doesn't distract from the video. Hovering immediately triggers a smooth fade-in to 90% opacity (200ms in, 400ms out).
+  - **Play/Pause Toggle**: Features a dedicated toggle button, but can also be triggered by hitting the **Spacebar** or with a **Single-click** anywhere on the video surface. 
+  - **Timeline Slider**: A scrubbable timeline slider with live timestamp updates relative to the total duration.
+  - **Volume & Mute Controls**: Includes a slider with a perceptually accurate (linear to quadratic) curve, a dedicated mute toggle button, and is also mapped to the **M key**.
 - **Exit Methods**:
   - Press the **Escape** key.
   - **Double-click** the fullscreen video.
   - Click the **✕** overlay button in the top-right corner.
 - **Auto-Looping**: Respects the "Repeat trailer videos" setting from the plugin configuration.
 
-## Installation & Testing Instructions
+## 🛠️ Technical Bug Fixes Included
+
+This branch includes robust fixes to the WPF `MediaElement` implementation:
+- **Black Screen on Pause resolved**: When entering fullscreen while a video is paused, WPF natively fails to render the initial frame, presenting a black screen. A robust `fsPlayer.Pause()` injection during initialization forces the pipeline to immediately render the initial start position frame.
+- **Stream Reset fixed**: Prevented an aggressive WPF bug that resets a manual stream back to `00:00` the very first time `Play()` is called from a Paused state.
+- **Mute Syncing**: Fixed logic where the fullscreen player would ignore the embedded player's mute state. 
+- **Compilation Repair**: Resolved 18 pre-existing namespace collisions and missing code references in `VideosDownloader.cs`, `SteamMetadataProvider.cs`, and `ExtraMetadataLoader.cs` related to an incomplete service-layer refactoring. Resolves `MouseDoubleClick` missing on `Grid` elements.
+
+## 🧪 Installation & Testing Instructions
 
 ### 1. Build and Import
 
@@ -47,12 +59,5 @@ Follow these steps to verify the feature:
 2.  **Toggle Button**: Hover over the video to reveal the control bar. Click the ⛶ button. The video should pop into fullscreen.
 3.  **Double-Click**: Exit fullscreen, then double-click the video surface. It should enter fullscreen.
 4.  **Exit Triggers**: While in fullscreen, verify that **Escape**, **Double-clicking**, and the **top-right X button** all return you to the Playnite interface.
-5.  **State Restore**: Pause a video at `0:10`, enter fullscreen. It should be paused at `0:10`. Play it to `0:15`, exit fullscreen. It should be playing (or paused as appropriate) at `0:15` in the embedded player.
-6.  **Volume Sync**: Change the volume in Playnite. Enter fullscreen. The volume should match. Change it in fullscreen (if controls are present) and verify it persists after exiting.
-
-## Technical Fixes Included
-
-This branch also includes critical fixes for pre-existing build errors that were preventing successful compilation:
-- Resolved `MouseDoubleClick` missing on `Grid` elements.
-- Fixed a namespace collision where `ExtraMetadataLoader` (class) conflicted with the namespace.
-- Fixed 18 pre-existing errors in `VideosDownloader.cs`, `SteamMetadataProvider.cs`, and `ExtraMetadataLoader.cs` related to an incomplete service-layer refactoring.
+5.  **State Restore**: Pause a video at `0:10`, enter fullscreen. It should be paused at `0:10`. Play it to `0:15`, exit fullscreen. It should be playing at `0:15` in the embedded player.
+6.  **Volume & Mute Sync**: Mute the video in Playnite. Enter fullscreen. The video should be muted. Change the volume and un-mute in the fullscreen controls, hit Escape, and verify those changes persisted back to the embedded player.
