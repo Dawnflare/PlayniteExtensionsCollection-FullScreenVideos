@@ -15,7 +15,7 @@ namespace EmlFullscreen
     /// </summary>
     public partial class FullscreenVideoWindow : Window
     {
-        private static readonly ILogger logger = LogManager.GetLogger();
+        private static readonly ILogger _logger = LogManager.GetLogger();
 
         private readonly TimeSpan _startPosition;
         private readonly bool _startPlaying;
@@ -106,7 +106,7 @@ namespace EmlFullscreen
             }
             catch (Exception ex)
             {
-                logger.Error(ex, "Failed to initialize fullscreen video source.");
+                _logger.Error(ex, "Failed to initialize fullscreen video source.");
                 ExitPosition = startPosition;
                 WasPlaying = false;
                 ExitVolume = volume;
@@ -333,7 +333,7 @@ namespace EmlFullscreen
             }
             catch (Exception ex)
             {
-                logger.Error(ex, "Error capturing fullscreen exit state.");
+                _logger.Error(ex, "Error capturing fullscreen exit state.");
                 ExitPosition = TimeSpan.Zero;
                 WasPlaying = false;
                 ExitVolume = 0.5;
