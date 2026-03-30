@@ -1,5 +1,12 @@
 # Fullscreen Video Capability - Extra Metadata Loader
 
+> [!NOTE]
+> **Maintainer Notice: Dual PR Submission**
+> This feature has been implemented and submitted via two separate Pull Requests to give you maximum flexibility:
+> - **PR #731 (This one)**: Built against the `master` branch (your WIP rewrite).
+> - **PR #732**: Ported and surgically built against the stable `emlCrashFix2025` branch, ensuring 0 regressions for the current live plugin.
+> Both PRs contain the exact same UI polish, including a recent patch to prevent interactive buttons from stealing Spacebar keyboard focus.
+
 This update adds the ability to view game videos in a borderless, maximized fullscreen window within the Extra Metadata Loader extension for Playnite.
 
 ## ✨ Features
