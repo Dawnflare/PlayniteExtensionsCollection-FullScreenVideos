@@ -183,7 +183,17 @@ namespace EmlFullscreen
             }
             else
             {
+                var currentPos = fsPlayer.Position;
                 fsPlayer.Play();
+                
+                // FIX: WPF MediaElement may reset the internal stream to 00:00 when Play() 
+                // is called for the first time after it was loaded in a Paused state.
+                // Reapplying the previously known valid position immediately after calling Play() prevents this jump.
+                if (currentPos != TimeSpan.Zero)
+                {
+                    fsPlayer.Position = currentPos;
+                }
+
                 WasPlaying = true;
                 PlayPauseIcon.Text = "\uE769"; // Pause icon
                 _timer.Start();
