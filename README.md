@@ -6,19 +6,6 @@
 
 # Playnite Extensions Collection
 
-## 🍴 Fork Purpose: Fullscreen Video Support
-This repository is a fork of the Playnite Extensions Collection, specifically updated to enhance the **Extra Metadata Loader** extension with **Fullscreen Video Playback** capabilities.
-
-While the original collection contains many excellent add-ons, this fork provides:
-- **Dedicated Fullscreen Mode**: View game trailers in a borderless, maximized window.
-- **Improved Controls**: Pause/Play via Spacebar and Single-click; Exit via ESC or Double-click.
-- **State Handoff**: Seamlessly transition between the library view and fullscreen without losing your playback position or volume settings.
-- **Bug Fixes**: Resolved 18+ pre-existing compilation and service-layer errors to ensure a stable build.
-
-For detailed setup and testing instructions, please refer to the **[Fullscreen Video Documentation](documentation/Readme-FullScreenVideo.md)**.
-
----
-
 A collection of Playnite extensions developed to enhance and customize the experience in [Playnite](https://github.com/JosefNemec/Playnite).
 
 ## Table of Contents
