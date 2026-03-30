@@ -98,6 +98,9 @@ namespace EmlFullscreen
                 }
                 else
                 {
+                    // FIX: Explicitly enter Paused state so WPF renders the initial frame
+                    // instead of a black screen. (Requires ScrubbingEnabled="True" in XAML)
+                    fsPlayer.Pause();
                     PlayPauseIcon.Text = "\uE768"; // Play icon
                 }
             }
@@ -138,14 +141,6 @@ namespace EmlFullscreen
             {
                 _hasAppliedStartPosition = true;
                 fsPlayer.Position = _startPosition;
-
-                // FIX: If starting paused, MediaElement shows a black screen
-                // until it's played. Briefly Play and Pause forces frame rendering.
-                if (!_startPlaying)
-                {
-                    fsPlayer.Play();
-                    fsPlayer.Pause();
-                }
             }
 
             // Configure the timeline slider range
